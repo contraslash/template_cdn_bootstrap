@@ -30,25 +30,34 @@
                 </div>
             </div>
             <div class="sidebar-header">
-                <div class="user-pic">
-                    <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                         alt="User picture">
-                </div>
-                <div class="user-info">
-          <span class="user-name">
-              {% if user.first_name %}
-                {{ user.first_name }}
-                  <strong>{{ user.last_name }}</strong>
-              {% else %}
-                <strong>{{ user.username }} </strong>
-              {% endif %}
-          </span>
-                    <span class="user-role">{% if user.is_staff %}{% trans 'Administrator'%}{% else %}{{ user.groups.all|join:"," }}{% endif %}</span>
-                    <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Online</span>
-          </span>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="user-pic">
+                        <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                             alt="User picture">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">
+                          {% if user.first_name %}
+                              {{ user.first_name }}
+                              <strong>{{ user.last_name }}</strong>
+                          {% else %}
+                              <strong>{{ user.username }} </strong>
+                          {% endif %}
+                            x</span>
+                        <span class="user-role">{% if user.is_staff %}{% trans 'Administrator'%}{% else %}{{ user.groups.all|join:"," }}{% endif %}</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                {% else %}
+                    <span>
+                        <a href="{{ log_in_url }}">
+
+                            {% trans 'Log in' %}
+                        </a>
+                    </span>
+                {% endif %}
             </div>
             <!-- sidebar-header  -->
             <!-- sidebar-search  -->
@@ -58,46 +67,48 @@
                         <span>{% trans 'General' %}</span>
                     </li>
 
-                    <li class="sidebar-dropdown">
-                    {% for menu in menus %}
-                        <a href="#">
-                            <i class="fa {{ menu.fa_icon }}"></i>
-                            <span>{{ menu.name }}</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                {% for submenu in menu.sub_menus %}
-                                    <li>
-                                        <a href="{{ submenu.url_reversed }}">
-                                            {{ submenu.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </li>
-                    {% endfor %}
+                        {% for menu in menus %}
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa {{ menu.fa_icon }}"></i>
+                                    <span>{{ menu.name }}</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        {% for submenu in menu.sub_menus %}
+                                            <li>
+                                                <a href="{{ submenu.url_reversed }}">
+                                                    {{ submenu.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                        {% endfor %}
                 </ul>
             </div>
             <!-- sidebar-menu  -->
         </div>
         <!-- sidebar-content  -->
         <div class="sidebar-footer">
-            <a href="#">
-                <i class="fa fa-bell"></i>
-                <span class="badge badge-pill badge-warning notification">3</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-envelope"></i>
-                <span class="badge badge-pill badge-success notification">7</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-cog"></i>
-                <span class="badge-sonar"></span>
-            </a>
-            <a href="#">
-                <i class="fa fa-power-off"></i>
-            </a>
+{#            <a href="#">#}
+{#                <i class="fa fa-bell"></i>#}
+{#                <span class="badge badge-pill badge-warning notification">3</span>#}
+{#            </a>#}
+{#            <a href="#">#}
+{#                <i class="fa fa-envelope"></i>#}
+{#                <span class="badge badge-pill badge-success notification">7</span>#}
+{#            </a>#}
+{#            <a href="#">#}
+{#                <i class="fa fa-cog"></i>#}
+{#                <span class="badge-sonar"></span>#}
+{#            </a>#}
+            {% if user.is_authenticated %}
+                <a href="{{ log_out_url }}">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            {% endif %}
         </div>
     </nav>
 
