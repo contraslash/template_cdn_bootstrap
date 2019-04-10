@@ -24,7 +24,6 @@ def menus(request):
             if visibles_submenus:
                 visible_menu_for_user["sub_menus"] = visibles_submenus
                 menus.append(visible_menu_for_user)
-    print(menus)
     return {
         "menus": menus
     }
