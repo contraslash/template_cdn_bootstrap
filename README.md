@@ -12,7 +12,7 @@ Also if you want to see as an index page add
 ```python
 path(
     '',
-    include('template_cdn_bootstrap')
+    include('template_cdn_bootstrap.urls')
     
 )
 ```
